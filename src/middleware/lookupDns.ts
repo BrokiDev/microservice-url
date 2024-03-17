@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import dns from "dns";
 
 export const lookupDns = (req: Request, res: Response, next: NextFunction) => {
-    console.log('in Dns Middleware');
     const originalUrl = req.body.url;
 
     if (!originalUrl) {
@@ -15,12 +14,12 @@ export const lookupDns = (req: Request, res: Response, next: NextFunction) => {
 
         dns.lookup(hostname, (err, address) => {
             if (err) {
-                return res.status(400).json({ error: 'invalid url' });
+                return res.json({ error: 'invalid url'});
             } else {
                 next();
             }
         });
     } catch (error) {
-        return res.status(400).json({ error: 'invalid url' });
+        return res.json({ error: 'invalid url'});
     }
 };
